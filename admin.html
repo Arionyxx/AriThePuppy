@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Site Manager</title>
+    <link rel="stylesheet" href="admin-styles.css">
+</head>
+<body>
+    <div class="admin-container">
+        <header class="admin-header">
+            <h1>🔧 Site Admin Panel</h1>
+            <div class="header-buttons">
+                <button onclick="previewSite()" class="preview-btn">Preview Site</button>
+                <button onclick="exportData()" class="export-btn">Export Data</button>
+                <button onclick="importData()" class="import-btn">Import Data</button>
+                <button onclick="window.close()" class="close-btn">Close Panel</button>
+            </div>
+        </header>
+
+        <div class="admin-tabs">
+            <button class="tab-btn active" onclick="showTab('general', this)">General</button>
+            <button class="tab-btn" onclick="showTab('social', this)">Social Links</button>
+            <button class="tab-btn" onclick="showTab('media', this)">Media</button>
+            <button class="tab-btn" onclick="showTab('content', this)">Custom Content</button>
+        </div>
+
+        <!-- General Settings Tab -->
+        <div id="general" class="tab-content active">
+            <h2>General Settings</h2>
+            <div class="form-group">
+                <label for="siteName">Site Name:</label>
+                <input type="text" id="siteName" placeholder="Your Name">
+            </div>
+            <div class="form-group">
+                <label for="bioText">Bio Text:</label>
+                <textarea id="bioText" rows="4" placeholder="Welcome to my personal space"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="profileImage">Profile Image URL:</label>
+                <input type="url" id="profileImage" placeholder="https://example.com/image.jpg">
+            </div>
+            <button onclick="updateGeneral()" class="save-btn">Save Changes</button>
+        </div>
+
+        <!-- Social Links Tab -->
+        <div id="social" class="tab-content">
+            <h2>Social Links</h2>
+            <div id="socialLinksEditor">
+                <!-- Social links will be populated here -->
+            </div>
+            <div class="button-group">
+                <button onclick="addSocialLink()" class="add-btn">Add New Link</button>
+                <button onclick="saveSocialLinks()" class="save-btn">Save Links</button>
+            </div>
+        </div>
+
+        <!-- Media Tab -->
+        <div id="media" class="tab-content">
+            <h2>Media Content</h2>
+            <div id="mediaEditor">
+                <!-- Media items will be populated here -->
+            </div>
+            <div class="button-group">
+                <button onclick="addMediaItem()" class="add-btn">Add Media</button>
+                <button onclick="saveMediaContent()" class="save-btn">Save Media</button>
+            </div>
+        </div>
+
+        <!-- Custom Content Tab -->
+        <div id="content" class="tab-content">
+            <h2>Custom Content</h2>
+            <div id="contentEditor">
+                <!-- Custom content will be populated here -->
+            </div>
+            <div class="button-group">
+                <button onclick="addCustomContent()" class="add-btn">Add Content</button>
+                <button onclick="saveCustomContent()" class="save-btn">Save Content</button>
+            </div>
+        </div>
+
+        <footer class="admin-footer">
+            <p>⚠️ Changes are saved locally. Make sure to backup your data regularly.</p>
+        </footer>
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+</html>

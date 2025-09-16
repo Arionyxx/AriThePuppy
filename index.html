@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Bio</title>
+    <link rel="stylesheet" href="styles.css">
+    <meta property="og:title" content="Personal Bio">
+    <meta property="og:description" content="Welcome to my personal space">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="profile-section">
+                <img id="profileImage" src="https://i.imgur.com/C56TnEk.png" alt="Profile Picture" class="profile-img">
+                <h1 id="siteName">Ari The Puppy</h1>
+                <p id="bioText">info: 21 year old also Minors do not interact.
+                Status: Taken by my bf
+                I am czech femboy i love my bf and playing games and making tiktoks :3</p>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <section class="links-section">
+                <h2>Connect With Me</h2>
+                <div id="socialLinks" class="social-links">
+                    <!-- Social links will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <section class="media-section">
+                <h2>Featured Content</h2>
+                <div id="mediaContainer" class="media-container">
+                    <!-- Media content will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <section class="custom-section">
+                <div id="customContent">
+                    <!-- Custom content will be populated by JavaScript -->
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 Personal Bio. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Admin Access Button (Hidden) -->
+    <div class="admin-access" onclick="showAdminLogin()">
+        <span>⚙️</span>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div id="adminModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAdminLogin()">&times;</span>
+            <h2>Admin Access</h2>
+            <form id="adminLoginForm">
+                <input type="email" id="adminEmail" placeholder="Admin Email" required>
+                <input type="password" id="adminPassword" placeholder="Password" required>
+                <button type="submit">Send Verification Code</button>
+            </form>
+            <div id="verificationSection" style="display: none;">
+                <input type="text" id="verificationCode" placeholder="Enter 6-digit code">
+                <button onclick="verifyCode()">Verify & Enter Admin</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
