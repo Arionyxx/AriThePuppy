@@ -20,9 +20,9 @@ class SiteManager {
             profileImage: 'https://i.imgur.com/C56TnEk.png',
             socialLinks: [
                 { name: 'GitHub', url: 'https://github.com/arionyxx', icon: '📝' },
-                { name: 'Twitter', url: 'https://twitter.com/@Arionyx', icon: '🐦' },
+                { name: 'Twitter', url: 'https://twitter.com/@Arionyxx', icon: '🐦' },
                 { name: 'TikTok', url: 'https://tiktok.com/@arifemboyo', icon: '🎵' },
-                { name: 'Instagram', url: 'https://instagram.com/Arionyx', icon: '📷' }
+                { name: 'Instagram', url: 'https://instagram.com/ariofemboy', icon: '📷' }
             ],
             mediaItems: [
                 { type: 'youtube', url: 'https://www.youtube.com/embed/oEsnmKspGa4', title: 'CSGO Legacy Astolfo' }
