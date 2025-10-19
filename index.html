@@ -1,91 +1,331 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Bio</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Personal Bio</title>
+  <link rel="stylesheet" href="styles.css" />
 
-    <!-- Open Graph (for social previews) -->
-    <meta property="og:title" content="Personal Bio">
-    <meta property="og:description" content="Welcome to my personal space">
-    <meta property="og:type" content="website">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Personal Bio" />
+  <meta property="og:description" content="Welcome to my personal space" />
+  <meta property="og:type" content="website" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S5HQJFF1PT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-S5HQJFF1PT');
+  </script>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-S5HQJFF1PT"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-S5HQJFF1PT');
-    </script>
+  <!-- Fancy Anti-AdBlock styles (move to styles.css if you prefer) -->
+  <style>
+    :root{
+      --bg:#0f1115; --fg:#e7e7ea; --muted:#a7a8ad; --accent:#8ab4ff;
+      --danger:#ff6b6b; --card:#151823; --border:rgba(255,255,255,.08);
+      --shadow:0 12px 40px rgba(0,0,0,.45);
+    }
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg:#f7f8fb; --fg:#0f1222; --muted:#5a5f74; --accent:#3b82f6;
+        --danger:#ef4444; --card:#fff; --border:rgba(10,12,16,.08);
+        --shadow:0 14px 40px rgba(16,24,40,.12);
+      }
+    }
+
+    /* Backdrop + modal */
+    #adbk-overlay[hidden]{ display:none !important; }
+    #adbk-overlay{
+      position:fixed; inset:0; z-index:9999; display:grid; place-items:center;
+      background: rgba(10,12,16,.55); backdrop-filter: blur(6px);
+      opacity:0; pointer-events:none; transition:opacity .25s ease;
+    }
+    #adbk-overlay.is-open{ opacity:1; pointer-events:auto; }
+
+    .adbk-modal{
+      width:min(700px,92vw); background:var(--card); color:var(--fg);
+      border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow);
+      overflow:clip; transform:translateY(12px) scale(.98); opacity:0;
+      transition:transform .28s ease, opacity .28s ease;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, sans-serif;
+    }
+    .is-open .adbk-modal{ transform:translateY(0) scale(1); opacity:1; }
+    @media (prefers-reduced-motion: reduce){
+      #adbk-overlay, .adbk-modal{ transition:none !important; }
+    }
+
+    .adbk-head{
+      padding:16px 20px; display:flex; align-items:center; gap:12px;
+      border-bottom:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(138,180,255,.12), transparent);
+    }
+    .adbk-head svg{ width:28px; height:28px; flex:0 0 auto; }
+    .adbk-title{ margin:0; font-weight:800; font-size:1.05rem; }
+    .adbk-body{ padding:18px 20px 8px; }
+    .adbk-body p{ margin:0 0 10px; color:var(--muted); }
+    .adbk-points{ margin:8px 0 0; padding-left:1.15rem; color:var(--muted); }
+    .adbk-badges{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+    .adbk-badge{
+      font-size:.8rem; padding:.35rem .55rem; border-radius:999px;
+      border:1px solid var(--border); background:rgba(255,255,255,.04);
+    }
+    .adbk-actions{
+      display:flex; flex-wrap:wrap; gap:10px; padding:16px 20px 20px;
+    }
+    .adbk-actions button, .adbk-actions a{
+      appearance:none; border:1px solid var(--border); border-radius:10px;
+      padding:.7rem 1rem; font-weight:700; cursor:pointer; background:#fff0;
+      color:var(--fg); text-decoration:none;
+    }
+    .adbk-primary{ background:var(--accent); color:#fff; border-color:transparent; }
+    .adbk-soft{ background:#fff0; }
+    .adbk-danger{ background:var(--danger); color:#fff; border-color:transparent; }
+    .adbk-footer{
+      padding:10px 20px 18px; display:flex; gap:10px; justify-content:space-between;
+      color:var(--muted); border-top:1px solid var(--border); font-size:.9rem;
+    }
+    .adbk-close{
+      position:absolute; top:10px; right:12px; background:#0000; border:0; color:var(--muted);
+      padding:8px; border-radius:8px; cursor:pointer;
+    }
+    .adbk-close:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+    /* Optional: dim some content while blocked */
+    .adbk-dim .media-container{ filter:grayscale(1) brightness(.85); }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <div class="profile-section">
-                <img id="profileImage" src="https://i.imgur.com/C56TnEk.png" alt="Profile Picture" class="profile-img">
-                <h1 id="siteName">Ari The Puppy</h1>
-                <p id="bioText">
-                    info: 21 year old also Minors do not interact.<br>
-                    Status: Taken by my bf<br>
-                    I am Czech femboy; I love my bf, playing games, and making TikToks :3
-                </p>
-            </div>
-        </header>
+  <div class="container">
+    <header class="header">
+      <div class="profile-section">
+        <img id="profileImage" src="https://i.imgur.com/C56TnEk.png" alt="Profile Picture" class="profile-img">
+        <h1 id="siteName">Ari The Puppy</h1>
+        <p id="bioText">
+          info: 21 year old also Minors do not interact.<br>
+          Status: Taken by my bf<br>
+          I am Czech femboy; I love my bf, playing games, and making TikToks :3
+        </p>
+      </div>
+    </header>
 
-        <main class="main-content">
-            <section class="links-section">
-                <h2>Connect With Me</h2>
-                <div id="socialLinks" class="social-links">
-                    <!-- Social links will be populated by JavaScript -->
-                </div>
-            </section>
+    <main class="main-content">
+      <section class="links-section">
+        <h2>Connect With Me</h2>
+        <div id="socialLinks" class="social-links"></div>
+      </section>
 
-            <section class="media-section">
-                <h2>Featured Content</h2>
-                <div id="mediaContainer" class="media-container">
-                    <!-- Media content will be populated by JavaScript -->
-                </div>
-            </section>
+      <section class="media-section">
+        <h2>Featured Content</h2>
+        <div id="mediaContainer" class="media-container"></div>
+      </section>
 
-            <section class="custom-section">
-                <div id="customContent">
-                    <!-- Custom content will be populated by JavaScript -->
-                </div>
-            </section>
-        </main>
+      <section class="custom-section">
+        <div id="customContent"></div>
+      </section>
+    </main>
 
-        <footer class="footer">
-            <p>&copy; 2025 Personal Bio. All rights reserved.</p>
-        </footer>
+    <footer class="footer">
+      <p>&copy; 2025 Personal Bio. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <!-- Admin Access Button (Hidden) -->
+  <div class="admin-access" onclick="showAdminLogin()"><span>⚙️</span></div>
+
+  <!-- Admin Login Modal -->
+  <div id="adminModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeAdminLogin()">&times;</span>
+      <h2>Admin Access</h2>
+      <form id="adminLoginForm">
+        <input type="email" id="adminEmail" placeholder="Admin Email" required>
+        <input type="password" id="adminPassword" placeholder="Password" required>
+        <button type="submit">Send Verification Code</button>
+      </form>
+      <div id="verificationSection" style="display:none;">
+        <input type="text" id="verificationCode" placeholder="Enter 6-digit code">
+        <button onclick="verifyCode()">Verify & Enter Admin</button>
+      </div>
     </div>
+  </div>
 
-    <!-- Admin Access Button (Hidden) -->
-    <div class="admin-access" onclick="showAdminLogin()">
-        <span>⚙️</span>
-    </div>
-
-    <!-- Admin Login Modal -->
-    <div id="adminModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeAdminLogin()">&times;</span>
-            <h2>Admin Access</h2>
-            <form id="adminLoginForm">
-                <input type="email" id="adminEmail" placeholder="Admin Email" required>
-                <input type="password" id="adminPassword" placeholder="Password" required>
-                <button type="submit">Send Verification Code</button>
-            </form>
-            <div id="verificationSection" style="display: none;">
-                <input type="text" id="verificationCode" placeholder="Enter 6-digit code">
-                <button onclick="verifyCode()">Verify & Enter Admin</button>
-            </div>
+  <!-- AdBlock modal -->
+  <div id="adbk-overlay" hidden aria-hidden="true" aria-modal="true" role="dialog" aria-labelledby="adbk-title" aria-describedby="adbk-desc">
+    <div class="adbk-modal" role="document">
+      <button class="adbk-close" type="button" aria-label="Close" id="adbk-close">✕</button>
+      <div class="adbk-head">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2l7 3v6c0 5-3.4 9.4-7 10-3.6-.6-7-5-7-10V5l7-3zM7 10h10v2H7v-2z"/></svg>
+        <h2 class="adbk-title" id="adbk-title">Ad blocker detected</h2>
+      </div>
+      <div class="adbk-body">
+        <p id="adbk-desc">Ads help keep this site free. Please allow ads here or support another way.</p>
+        <ul class="adbk-points">
+          <li>No pop-ups, no auto-play — just minimal, respectful ads.</li>
+          <li>Whitelist this site in your blocker, then refresh.</li>
+        </ul>
+        <div class="adbk-badges" aria-hidden="true">
+          <span class="adbk-badge">uBlock Origin</span>
+          <span class="adbk-badge">uBO Lite</span>
+          <span class="adbk-badge">AdGuard</span>
+          <span class="adbk-badge">Adblock Plus</span>
         </div>
+      </div>
+      <div class="adbk-actions">
+        <a href="/support" class="adbk-soft" id="adbk-support">See support options</a>
+        <button class="adbk-primary" id="adbk-instructions">How to allow ads</button>
+        <button class="adbk-soft" id="adbk-continue">Continue for now</button>
+      </div>
+      <div class="adbk-footer">
+        <span>Thanks for keeping independent sites alive 💖</span>
+        <button class="adbk-danger" id="adbk-disable-dim">I allowed ads</button>
+      </div>
     </div>
+  </div>
 
-    <script src="script.js"></script>
+  <!-- Detector + UI logic -->
+  <script>
+  (function(){
+    const TIME_BUDGET = 1300; // ms overall
+    const start = performance.now();
+    const timeLeft = () => Math.max(0, TIME_BUDGET - (performance.now() - start));
+
+    // Utility
+    const styleHidden = el => {
+      const s = getComputedStyle(el);
+      return s.display === 'none' || s.visibility === 'hidden' || s.opacity === '0' || el.offsetParent === null;
+    };
+
+    // 1) DOM bait – common classes many lists block (uBO/AdGuard/ABP)
+    function domBait(){
+      return new Promise(res=>{
+        const bait = document.createElement('div');
+        bait.className = 'adsbox ad-banner ad_unit sponsored adslot adsbygoogle pub_300x250';
+        bait.style.cssText = 'position:absolute;left:-9999px;width:1px;height:1px;pointer-events:none;';
+        document.body.appendChild(bait);
+        requestAnimationFrame(()=>{
+          const blocked = styleHidden(bait) || (bait.clientWidth===0 && bait.clientHeight===0);
+          bait.remove(); res(blocked);
+        });
+      });
+    }
+
+    // 2) Network bait – looks like ad-tech; host this file to avoid 404
+    async function networkBait(){
+      const url = '/static/ads/ads-sdk.js';
+      try{
+        const ctrl = new AbortController();
+        const tid = setTimeout(()=>ctrl.abort(), Math.min(900, timeLeft()));
+        const res = await fetch(url, { method:'HEAD', cache:'no-store', mode:'same-origin', signal:ctrl.signal });
+        clearTimeout(tid);
+        return !res || res.status === 0; // opaque/blocked
+      }catch(e){
+        // Could be missing or blocked — score combines signals to avoid FPs.
+        return true;
+      }
+    }
+
+    // 3) Light heuristic – GA/dataLayer oddities
+    function globalHeuristics(){
+      const gtagGone = typeof window.gtag === 'undefined' && Array.isArray(window.dataLayer);
+      const googletagWeird = ('googletag' in window) && !window.googletag?.pubads;
+      return gtagGone || googletagWeird;
+    }
+
+    async function detect(){
+      const results = await Promise.race([
+        (async()=>[await domBait(), await networkBait(), globalHeuristics()])(),
+        new Promise(r=>setTimeout(()=>r([false,false,false]), TIME_BUDGET))
+      ]);
+      const score = results.filter(Boolean).length;
+      return { blocked: score >= 2, signals: results };
+    }
+
+    // ===== Modal UI =====
+    const overlay = document.getElementById('adbk-overlay');
+    const closeBtn = document.getElementById('adbk-close');
+    const continueBtn = document.getElementById('adbk-continue');
+    const supportBtn = document.getElementById('adbk-support');
+    const instructBtn = document.getElementById('adbk-instructions');
+    const disableDimBtn = document.getElementById('adbk-disable-dim');
+    let lastFocused;
+
+    function openModal(){
+      if (!overlay) return;
+      document.documentElement.classList.add('adbk-dim');
+      overlay.hidden = false;
+      overlay.classList.add('is-open');
+      overlay.setAttribute('aria-hidden','false');
+      lastFocused = document.activeElement;
+      closeBtn?.focus();
+      if (typeof gtag === 'function') gtag('event','adblock_modal_shown');
+      document.addEventListener('keydown', onKeyDown);
+      overlay.addEventListener('mousedown', onBackdrop);
+    }
+    function closeModal(){
+      if (!overlay) return;
+      overlay.classList.remove('is-open');
+      overlay.setAttribute('aria-hidden','true');
+      setTimeout(()=>{ overlay.hidden = true; }, 200);
+      document.documentElement.classList.remove('adbk-dim');
+      document.removeEventListener('keydown', onKeyDown);
+      overlay.removeEventListener('mousedown', onBackdrop);
+      sessionStorage.setItem('adbk_dismissed','1');
+      if (typeof gtag === 'function') gtag('event','adblock_notice_dismissed');
+      if (lastFocused && lastFocused.focus) lastFocused.focus();
+    }
+    function onBackdrop(e){ if (e.target === overlay) closeModal(); }
+    function onKeyDown(e){
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'Tab'){
+        const focusables = overlay.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        const list = Array.from(focusables).filter(el=>!el.disabled && el.offsetParent !== null);
+        if (!list.length) return;
+        const first = list[0], last = list[list.length - 1];
+        if (e.shiftKey && document.activeElement === first){ last.focus(); e.preventDefault(); }
+        else if (!e.shiftKey && document.activeElement === last){ first.focus(); e.preventDefault(); }
+      }
+    }
+
+    // Buttons
+    closeBtn?.addEventListener('click', closeModal);
+    continueBtn?.addEventListener('click', closeModal);
+    supportBtn?.addEventListener('click', ()=>{ if (typeof gtag==='function') gtag('event','adblock_support_clicked'); });
+    instructBtn?.addEventListener('click', ()=>{
+      alert('To allow ads: open your blocker → add this site to the whitelist → refresh the page.');
+      if (typeof gtag==='function') gtag('event','adblock_howto_clicked');
+    });
+    disableDimBtn?.addEventListener('click', ()=>{
+      closeModal();
+      if (typeof gtag==='function') gtag('event','adblock_user_claim_allowed');
+    });
+
+    async function init(){
+      if (sessionStorage.getItem('adbk_dismissed') === '1') return;
+      if (document.readyState === 'loading'){
+        document.addEventListener('DOMContentLoaded', run, { once:true });
+      } else {
+        run();
+      }
+    }
+
+    async function run(){
+      const { blocked } = await detect();
+      if (blocked){
+        openModal();
+        if (typeof gtag==='function') gtag('event','adblock_detected', { method:'multi-signal' });
+      } else {
+        if (typeof gtag==='function') gtag('event','adblock_not_detected');
+      }
+    }
+
+    init();
+  })();
+  </script>
+
+  <script src="script.js"></script>
 </body>
 </html>
