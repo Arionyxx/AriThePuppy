@@ -4,247 +4,34 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ari – Personal Bio</title>
-
-  <!-- Meta -->
-  <meta name="description" content="Ari – digital artist & coder. I create unique experiences and bring ideas to life." />
-  <link rel="icon" href="https://i.imgur.com/rzvlhKK.png" />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Ari – Personal Bio" />
-  <meta property="og:description" content="Digital artist & coder. Projects and contact." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://i.imgur.com/rzvlhKK.png" />
-  <meta property="og:url" content="https://example.com" />
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Ari – Personal Bio" />
-  <meta name="twitter:description" content="Digital artist & coder. Projects and contact." />
-  <meta name="twitter:image" content="https://i.imgur.com/rzvlhKK.png" />
-
-  <!--
-    ⚠️ IMPORTANT
-    Your previous build included an anti‑adblock overlay that many blockers
-    would *auto‑trigger* just because of element IDs/classes containing the
-    substring "ad". That caused unexpected hiding/overlays for some users.
-    This single‑file version removes it for reliability and performance.
-    If you still want a supportive modal, add it back with neutral names
-    (e.g., "support-modal") and trigger it manually.
-  -->
-
   <style>
-    :root{
-      --bg-1:#5b7cfa;  /* top-left */
-      --bg-2:#7a5af8;  /* center */
-      --bg-3:#7b2cbf;  /* bottom-right */
-      --text:#0f1222;
-      --muted:#3f4462;
-      --card:#ffffffcc;
-      --btn:#1B1464;      /* matches your widget button color */
-      --btn-ghost:#ffffff;
-      --link:#4f46e5;
-      --ring: 0 0 0 3px rgba(79,70,229,.35);
+    :root{ --bg1:#6aa1ff; --bg2:#7a5af8; --bg3:#7b2cbf; --fg:#0f1222; --muted:#3f4462; --chip:#ffb6c1; --chipfg:#1b1464 }
+    html,body{height:100%;}
+    body{margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial;
+      background: radial-gradient(1200px 900px at 15% 0%, var(--bg1), transparent 60%),
+                  radial-gradient(1400px 1000px at 100% 100%, var(--bg3), transparent 45%),
+                  linear-gradient(135deg, var(--bg2), var(--bg3));
+      color:var(--fg);
+      display:flex; align-items:flex-start; justify-content:center;
     }
-    @media (prefers-color-scheme: dark){
-      :root{
-        --text:#e7e7ea;
-        --muted:#a7a8ad;
-        --card:#151823cc;
-        --btn:#8b5cf6;
-        --btn-ghost:#1f1f24;
-        --link:#8ab4ff;
-      }
-    }
-    *{ box-sizing:border-box }
-    html,body{ height:100% }
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      color:var(--text);
-      background: radial-gradient(1200px 900px at 15% 0%, var(--bg-1), transparent 60%),
-                  radial-gradient(1400px 1000px at 100% 100%, var(--bg-3), transparent 45%),
-                  linear-gradient(135deg, var(--bg-2), var(--bg-3));
-      min-height:100dvh;
-      display:grid;
-      place-items:center;
-    }
-
-    .container{
-      width:min(1100px, 94vw);
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:40px;
-      align-items:center;
-    }
-    @media (max-width: 900px){
-      .container{ grid-template-columns:1fr; gap:28px; padding:64px 0 }
-    }
-
-    .card{
-      backdrop-filter: blur(8px);
-      background:var(--card);
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:20px;
-      padding:28px 28px 24px;
-      box-shadow: 0 24px 50px rgba(0,0,0,.20);
-    }
-
-    .hero-title{ font-size: clamp(36px, 6vw, 64px); margin:0 0 10px; letter-spacing:.2px }
-    .wave{ display:inline-block; transform-origin: 70% 70%; }
-    .wave{ animation: wave 2.3s infinite }
-    @keyframes wave{
-      0%{ transform: rotate(0deg) }
-      10%{ transform: rotate(14deg) }
-      20%{ transform: rotate(-8deg) }
-      30%{ transform: rotate(14deg) }
-      40%{ transform: rotate(-4deg) }
-      50%{ transform: rotate(10deg) }
-      60%,100%{ transform: rotate(0deg) }
-    }
-
-    .description{ font-size: clamp(16px, 2.4vw, 20px); color:var(--muted); margin:0 0 18px; line-height:1.7 }
-
-    .actions{ display:flex; gap:12px; flex-wrap:wrap }
-    .btn{
-      appearance:none; -webkit-appearance:none; -moz-appearance:none;
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:12px 16px; border-radius:999px; border:0; text-decoration:none; font-weight:700;
-      box-shadow: 0 10px 20px rgba(0,0,0,.12);
-      background:var(--btn); color:#fff;
-    }
-    .btn:hover{ filter: brightness(1.06) }
-    .btn:focus-visible{ outline:none; box-shadow: var(--ring) }
-    .btn.ghost{ background:var(--btn-ghost); color:var(--text); border:1px solid rgba(255,255,255,.18) }
-
-    .art{
-      display:grid; place-items:center; height:320px; border-radius:24px; border:1px dashed rgba(255,255,255,.25);
-      background:linear-gradient(180deg, rgba(255,255,255,.12), transparent);
-      font-size:56px;
-    }
-
-    nav.quick{ position:fixed; right:20px; bottom:20px; display:grid; gap:10px }
-    .chip{
-      background:#ffb6c1; color:#1b1464; border-radius:999px; padding:10px 14px; font-weight:800; text-decoration:none;
-      box-shadow:0 8px 22px rgba(0,0,0,.2)
-    }
-
-    /* Sections */
-    section{ scroll-margin-top: 90px }
-    h2{ font-size:clamp(24px, 3.6vw, 34px); margin:0 0 10px }
-    .grid{ display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:16px }
-    @media (max-width: 700px){ .grid{ grid-template-columns: 1fr } }
-    .tile{
-      padding:18px; border:1px solid rgba(255,255,255,.15); border-radius:16px; background:rgba(255,255,255,.06);
-    }
-    .tile p{ margin:6px 0 0; color:var(--muted) }
-
-    footer{ opacity:.8; font-size:14px; margin:30px 0 0; text-align:center }
-    a.inline{ color:var(--link); font-weight:600; text-decoration:none }
-    a.inline:hover{ text-decoration:underline }
+    .wrap{ width:min(1100px, 94vw); padding:64px 0 96px; }
+    h1{ font-size: clamp(40px, 8vw, 72px); margin:0 0 12px }
+    p{ font-size: clamp(16px, 2.4vw, 20px); color:var(--muted); margin:0 0 20px; line-height:1.7 }
+    .row{ display:flex; gap:12px; flex-wrap:wrap }
+    a.btn{ text-decoration:none; background:#1B1464; color:#fff; padding:12px 16px; border-radius:999px; font-weight:800 }
+    a.btn.ghost{ background:#fff; color:#1B1464 }
+    .chip{ position:fixed; right:18px; bottom:18px; background:var(--chip); color:var(--chipfg); padding:10px 14px; border-radius:999px; font-weight:800; text-decoration:none; box-shadow:0 8px 22px rgba(0,0,0,.2) }
   </style>
 </head>
 <body>
-  <main class="container">
-    <section class="card" aria-labelledby="intro-title">
-      <h1 id="intro-title" class="hero-title">
-        Hello! <span class="wave" aria-hidden="true">👋</span>
-      </h1>
-      <p class="description">
-        I'm <strong>Ari</strong>, a passionate digital artist and coder. I create unique experiences and bring ideas to life.
-      </p>
-      <div class="actions">
-        <a class="btn" href="#projects">View Projects</a>
-        <a class="btn ghost" href="#contact">Contact Me</a>
-      </div>
-
-      <footer>
-        <small>Built with ❤️ · <a class="inline" href="#accessibility">Accessibility</a></small>
-      </footer>
-    </section>
-
-    <aside class="card" aria-labelledby="art-preview">
-      <h2 id="art-preview" style="margin:0 0 10px">Preview</h2>
-      <div class="art" role="img" aria-label="Placeholder art">🎨</div>
-    </aside>
+  <main class="wrap">
+    <h1>Hello! <span aria-hidden="true">👋</span></h1>
+    <p>I'm <strong>Ari</strong>, a digital artist and coder. I create unique experiences and bring ideas to life.</p>
+    <div class="row">
+      <a class="btn" href="#projects">View Projects</a>
+      <a class="btn ghost" href="#contact">Contact Me</a>
+    </div>
   </main>
-
-  <nav class="quick" aria-label="Quick Links">
-    <a class="chip" href="#projects">Projects</a>
-  </nav>
-
-  <!-- Content sections (example stubs) -->
-  <section id="projects" class="container" aria-labelledby="projects-title">
-    <div class="card" style="grid-column:1 / -1">
-      <h2 id="projects-title">Projects</h2>
-      <div class="grid">
-        <div class="tile"><strong>Generative Landscapes</strong><p>WebGL experiments with shader art.</p></div>
-        <div class="tile"><strong>Cozy UI Kit</strong><p>A pink‑accented, rounded UI kit for web apps.</p></div>
-        <div class="tile"><strong>Tiny Game Jam</strong><p>2D puzzle prototype built in a weekend.</p></div>
-        <div class="tile"><strong>Interactive Poster</strong><p>GSAP + SVG kinetic typography.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact" class="container" aria-labelledby="contact-title">
-    <div class="card" style="grid-column:1 / -1">
-      <h2 id="contact-title">Contact</h2>
-      <p class="description">DM me anywhere or email <a class="inline" href="mailto:hello@example.com">hello@example.com</a>.</p>
-    </div>
-  </section>
-
-  <!-- Google Analytics (loads only after user interaction/idle) -->
-  <script>
-    (function lazyAnalytics(){
-      const load = () => {
-        if (window.__gaLoaded) return; window.__gaLoaded = true;
-        const s = document.createElement('script');
-        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-S5HQJFF1PT';
-        s.async = true; document.head.appendChild(s);
-        window.dataLayer = window.dataLayer || []; function gtag(){ dataLayer.push(arguments) }
-        window.gtag = gtag; gtag('js', new Date()); gtag('config', 'G-S5HQJFF1PT');
-      };
-      // Idle or first interaction — avoids layout jank and respects performance
-      if ('requestIdleCallback' in window) requestIdleCallback(load, { timeout: 3000 });
-      ['click','keydown','scroll','pointerdown'].some(ev => (window.addEventListener(ev, load, { once:true }), true));
-    })();
-  </script>
-
-  <!-- Cute Assistant widget — deferred to idle to avoid blocking -->
-  <script>
-    (function lazyWidget(){
-      const load = () => {
-        if (document.getElementById('cute-widget')) return;
-        const s = document.createElement('script');
-        s.id = 'cute-widget';
-        s.async = true;
-        s.src = 'https://kcw3jrmemgb5dm3a4v7kk44r.agents.do-ai.run/static/chatbot/widget.js';
-        s.setAttribute('data-agent-id','08ea3876-af4e-11f0-b074-4e013e2ddde4');
-        s.setAttribute('data-chatbot-id','6CBq82jWCrAv8Nvo_ClgaKQ9zvXhvP8p');
-        s.setAttribute('data-name','Your Cute Assistant');
-        s.setAttribute('data-primary-color','#FFB6C1');
-        s.setAttribute('data-secondary-color','#AFEEEE');
-        s.setAttribute('data-button-background-color','#1B1464');
-        s.setAttribute('data-starting-message', 'Hello there cutie! Want help with coding or hosting?');
-        s.setAttribute('data-logo','https://i.imgur.com/rzvlhKK.png');
-        document.body.appendChild(s);
-      };
-      if ('requestIdleCallback' in window) requestIdleCallback(load, { timeout: 5000 });
-      else setTimeout(load, 2000);
-    })();
-  </script>
-
-  <!-- Smooth anchor scrolling (reduces CLS when jumping to sections) -->
-  <script>
-    document.addEventListener('click', (e) => {
-      const a = e.target.closest('a[href^="#"]');
-      if (!a) return;
-      const id = a.getAttribute('href').slice(1);
-      const el = document.getElementById(id);
-      if (!el) return;
-      e.preventDefault();
-      el.scrollIntoView({ behavior:'smooth', block:'start' });
-      history.replaceState(null, '', `#${id}`);
-    });
-  </script>
+  <a class="chip" href="#projects">Projects</a>
 </body>
 </html>
